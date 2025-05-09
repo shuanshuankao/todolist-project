@@ -5,12 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TodoList</title>
 </head>
+<style>
+
+</style>
 <body>
     <h1>代辦事項</h1>
     <hr>
     {% for todo in todos %}
-        <h2>{{todo.title}}</h2>
-        <small>{{todo.created}}</small>
+        <small>{{todo.created}}</small>    
+        <h1>{{todo.id}}</h1>
+        <h2><a href="{% url 'viewtodo' todo.id %}">{{todo.title}}</a></h2>
+        {% if todo.text %}
         <li>{{todo.text}}</li>
         {% endif %}
         {% if todo.important %}
