@@ -3,7 +3,18 @@
 代辦事項
 {% endblock %}
 {% block content %}
-        <small>{{todo.created}}</small>    
+{% block style %}
+{% endblock %}
+<h1>代辦事項</h1>
+
+{% if not todos %}
+<h2 style="color: red;">請先登入或註冊，
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">註冊</a>
+</h2>
+{% endif %}
+{% for todo in todos %}
+<small>{{todo.created}}</small>    
         <h1>{{todo.id}}</h1>
         <h2><a href="{% url 'viewtodo' todo.id %}">{{todo.title}}</a></h2>
         {% if todo.text %}
