@@ -3,26 +3,41 @@
 代辦事項
 {% endblock %}
 {% block content %}
+
 {% block style %}
 {% endblock %}
-<h1>代辦事項</h1>
 
+<h1>代辦事項</h1>
 {% if not todos %}
 <h2 style="color: red;">請先登入或註冊，
         <a href="{% url 'login' %}">Login</a>
         <a href="{% url 'register' %}">註冊</a>
 </h2>
 {% endif %}
+
 {% for todo in todos %}
-<small>{{todo.created}}</small>    
-        <h1>{{todo.id}}</h1>
-        <h2><a href="{% url 'viewtodo' todo.id %}">{{todo.title}}</a></h2>
-        {% if todo.text %}
-        <li>{{todo.text}}</li>
-        {% endif %}
+<small>{{todo.created}}</small> 
+<h2><a href="{% url 'viewtodo' todo.id %}">
         {% if todo.important %}
-        <p style="color: red;">重要</p>
-        {% endif %}
-        <hr>
+        <span style="color: red;">(重要)</span>
+        {% endif %}   
+        {{todo.title}}</a>
+</h2>
+{% if todo.text %}
+<li>{{todo.text|linebreaks}}</li>
+{% endif %}
+
+{% if todo.date_completed %}
+<small style="color: rgb(8, 173, 49);">完成時間:{{todo.date_completed}}</small>
+{% endif %}
+
+
+<p><a class="button" 
+        href="{% url 'deletetodo' todo.id %}" onclick="return confirm('確認是否刪除?!')">刪除</a>
+        <a class="button" 
+        style="background-color: red;color: white;"
+        href="{% url 'deletetodo' todo.id %}">更新</a></p>
+
+<hr>
 {% endfor %}
 {% endblock %}
