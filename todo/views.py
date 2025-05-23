@@ -6,10 +6,20 @@ from datetime import datetime
 
 # Create your views here.
 def todolist(request):
+
     user = request.user
     todos = None
     if user.is_authenticated:
+        filter_params = request.GET.get("filter")
+        print(filter_params)
+
         todos = Todo.objects.filter(user=request.user).order_by("-created")
+        if filter_params == "important":
+            todos = todos.filter(important=True)
+        elif filter_params == "prnding":
+            todos = todos.filter(completed=False)
+        elif filter_params == "completed":
+            todos = todos.filter(completed=True)
     # get 唯一 、 filter 篩選
     # todos = Todo.objects.filter(id=1)
     print(todos)
@@ -52,6 +62,10 @@ def createtodo(request):
         form = TodoForm(request.POST)
         todo = form.save(commit=False)
         todo.user = request.user
+        if todo.completed:
+            todo.date_completed = datetime.now().strftime("%Y-%m-%d %H:%M")
+        else:
+            todo.date_completed = None
         todo.save()
         return redirect("todolist")
     else:
