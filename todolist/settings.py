@@ -19,20 +19,21 @@ pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+load_dotenv(BASE_DIR / ".env")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = (os.environ.get("DHANGO_KEY"),)
-# SECRET_KEY = "django-insecure-cdm+ey6_!&y11u2a5rwx+&a(p#(a^3gk%bct(yq*qo!mvh+n*a"
+# SECRET_KEY = (os.environ.get("DHANGO_KEY"),)
+SECRET_KEY = "django-insecure-cdm+ey6_!&y11u2a5rwx+&a(p#(a^3gk%bct(yq*qo!mvh+n*a"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-
-ALLOWED_HOSTS = ["todolist-project-xxho.onrender.com"]
-
+if DEBUG:
+    ALLOWED_HOSTS = []
+else:
+    ALLOWED_HOSTS = ["todolist-project-xxho.onrender.com"]
 
 # Application definition
 
@@ -99,7 +100,6 @@ DATABASES = {
     }
 }
 
-load_dotenv(BASE_DIR / ".env")
 
 DATABASES = {
     "default": {
